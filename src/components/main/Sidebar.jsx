@@ -22,13 +22,19 @@ const Sidebar = () => {
               </svg>
               Manage User
             </Link>
-            <Link to="/user-management" className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+            {/* <Link to="/user-management" className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
               <svg className="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5h18M3 12h18m-18 4.5h18"></path>
               </svg>
               Manage Channel
-            </Link>
+            </Link> */}
             <Link to="/channel-management" className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+              <svg className="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5h18M3 12h18m-18 4.5h18"></path>
+              </svg>
+              Group Management
+            </Link>
+            {/* <Link to="/channel-management" className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
               <svg className="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5h18M3 12h18m-18 4.5h18"></path>
               </svg>
@@ -39,13 +45,7 @@ const Sidebar = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5h18M3 12h18m-18 4.5h18"></path>
               </svg>
               Channel Management
-            </Link>
-            <Link to="/channel-management" className="text-gray-600 hover:bg-gray-50 hover:text-gray-900 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-              <svg className="mr-3 h-6 w-6 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5h18M3 12h18m-18 4.5h18"></path>
-              </svg>
-              Channel Management
-            </Link>
+            </Link> */}
           </nav>
         </div>
       </div>

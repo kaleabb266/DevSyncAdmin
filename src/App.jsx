@@ -5,9 +5,11 @@ import Sidebar from './components/main/Sidebar';
 import ManageQuiz from './components/main/ManageQuiz';
 import ChannelManagement from './components/main/channel';
 import ReportedUsersPage from './components/main/Reportusers';
+import ReportedUsers from './components/main/reporteduser';
 import ProgrammingLanguages from './components/main/programminglanguages';
+import QuizQuestions from './components/main/quizquestion';
 // Import other components if you have them
-// import ManageQuestions from './ManageQuestions';
+// import ManageQuiz from './components/main/ManageQuiz';
 // import UserManagement from './UserManagement';
 
 const MainApp = () => {
@@ -21,9 +23,11 @@ const MainApp = () => {
             <div className="w-full p-4">
               <Routes>
                 <Route path="/manage-quiz" element={<ManageQuiz />} />
-                <Route path="/channel-management" element={<ChannelManagement />} />
+                <Route path="/channel-management" element={<ReportedUsers />} />
                 <Route path="/user-management" element={<ReportedUsersPage />} />
                 <Route path="/programming-languages" element={<ProgrammingLanguages />} />
+                <Route path="/programming-languages/:language" element={<QuizQuestions />} />
+                <Route path="/programming-languages/:language/new" element={<ManageQuiz />} />
                 {/* Add other routes here */}
                 {/* <Route path="/manage-questions" element={<ManageQuestions />} />
                 <Route path="/user-management" element={<UserManagement />} /> */}
