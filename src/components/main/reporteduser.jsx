@@ -9,13 +9,16 @@ const ReportedUsers = () => {
     const fetchReportedUsers = async () => {
       try {
         const response = await fetch('/api/reported-users');
+        console.log('Response:', response); // Log the response
         if (!response.ok) {
           throw new Error('Failed to fetch reported users');
         }
+        
         const data = await response.json();
-        setUsers(data);
+        console.log('Data:', data); // Log the data
+        setUsers(data); // Correctly set the users state with the data
       } catch (error) {
-        setError(error.message); // Set error state
+        setError(error.message); 
         console.error('Error fetching reported users:', error);
       }
     };
