@@ -1,12 +1,13 @@
-// QuizQuestions.js
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 const QuizQuestions = ({ languageId }) => {
   const selectedlanguage = useParams();
+  console.log(selectedlanguage.language)
   const [questions, setQuestions] = useState([]);
 
 
@@ -29,9 +30,7 @@ const QuizQuestions = ({ languageId }) => {
   fetchQuestions();
 }, []);
 
-const filteredQuestions = questions.filter((question) => question.language === "Java");
-console.log(filteredQuestions)
-console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
+const filteredQuestions = questions.filter((question) => question.language === selectedlanguage.language);
 
 
 
@@ -42,7 +41,6 @@ console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
   const handleDeleteQuestion = async (questionId) => {
     try {
       const response = await axios.delete(`http://localhost:3001/api/quiz/${questionId}`); // Replace with your actual API endpoint
-      console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
   
       if (response.status === 200) {
         onDeleteSuccess(); // Callback function to handle successful deletion on UI
@@ -66,7 +64,7 @@ console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
       });
 
       if (response.ok) {
-        onDeleteSuccess(); // Callback function to handle successful deletion on UI
+        onDeleteSuccess(); 
       } else {
         console.error('Error deleting quiz:', await response.text());
       }
@@ -97,14 +95,16 @@ console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
               <span className="text-gray-700">D. {question.choices[3]}</span>
             </div>
             <div className="flex justify-end mt-4"> 
-              <button className="bg-green-500 text-white hover:bg-green-700 px-4 py-2 rounded mr-2">Update</button>  
+              <Link to={`/manage-quiz/${question._id}`} state={{ question }}>
+                <button className="bg-green-500 text-white hover:bg-green-700 px-4 py-2 rounded mr-2">Update</button> 
+              </Link> 
               <button onClick={() => handleDeleteQuestion(question.id)} className="bg-red-500 text-white hover:bg-red-700 px-4 py-2 rounded">Delete</button>
 
             </div>
           </li>
         ))}
       </ul>
-      <button onClick={handleNewQuestionClick} className="bg-blue-500 text-white hover:bg-blue-700 px-4 py-2 rounded">Add Question</button>
+      <button onClick={handleDelete} className="bg-blue-500 text-white hover:bg-blue-700 px-4 py-2 rounded">Add Question</button>
     </div>
   );
   

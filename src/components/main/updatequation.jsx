@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import {  useParams } from 'react-router-dom'; // Import for routing
 
-const ManageQuiz = () => {
+const UpdateQuiz = () => {
   const [formData, setFormData] = useState({
     language: '',
     question: '',
-    choices: ['', '', '', ''], // Initialize with four empty choices
-    correctAnswerIndex: -1, // Initialize to -1 (invalid index)
+    choices: ['', '', '', ''],
+    correctAnswerIndex: -1,
   });
+
+  const { quizId } = useParams(); // Get quiz ID from URL param
+//   const history = useHistory();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -30,22 +34,38 @@ const ManageQuiz = () => {
     try {
       const filteredData = formData; // Send all form data
 
-      const response = await axios.post('http://localhost:3001/api/quiz', filteredData);
-      console.log('Quiz saved successfully:', response.data);
-      setFormData({
-        language: '',
-        question: '',
-        choices: ['', '', '', ''], // Clear choices
-        correctAnswerIndex: -1,
-      }); // Clear form data
+      const response = await axios.put(`http://localhost:3001/api/quiz/${quizId}`, filteredData); // Use PUT for update
+      console.log('Quiz updated successfully:', response.data);
+    //   history.push('/quizzes'); // Redirect to list of quizzes on success
     } catch (error) {
-      console.error('Error saving quiz:', error);
+      console.error('Error updating quiz:', error);
     }
   };
 
+  useEffect(() => {
+    const fetchQuiz = async () => {
+      if (quizId) { // Only fetch if quizId exists (for update)
+        try {
+          const response = await axios.get(`http://localhost:3001/api/quiz/${quizId._id}`);
+          setFormData(response.data[0]);
+          console.log("formData")
+          console.log(formData)
+          console.log("formData") // Set form data with fetched quiz details
+        } catch (error) {
+          console.error('Error fetching quiz:', error);
+          // Handle error (e.g., redirect to error page)
+        }
+      }
+    };
+
+    fetchQuiz(); // Call fetchQuiz on component mount
+  }, [quizId]); // Dependency array: refetch on quizId change
+// const filteredQuestions = questions.filter((question) => question.language === selectedlanguage.language);
+
+
   return (
     <div className="manage-quiz-container p-4">
-      <h1 className="text-2xl font-bold mb-4">Manage Quizzes</h1>
+      <h1 className="text-2xl font-bold mb-4">Manage Quiz</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -113,4 +133,4 @@ const ManageQuiz = () => {
   );
 }
 
-export default ManageQuiz;
+export default UpdateQuiz;

@@ -11,22 +11,22 @@ const ProgrammingLanguages = ({ onSelectLanguage }) => {
 
 
 
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      
-  
-      try {
-        const response = await axios.get('http://localhost:3001/api/quiz');
-        setquestionsD(response.data);
-      } catch (err) {
-        console.log(err);
-      } finally {
-        console.log("yesss");
-      }
-    };
-  
-    fetchQuestions();
-  }, []);
+useEffect(() => {
+  const fetchQuestions = async () => {
+    
+
+    try {
+      const response = await axios.get('http://localhost:3001/api/quiz');
+      setquestionsD(response.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      console.log("yesss");
+    }
+  };
+
+  fetchQuestions();
+}, []);
 
   const handleLanguageClick = (language) => {
 
