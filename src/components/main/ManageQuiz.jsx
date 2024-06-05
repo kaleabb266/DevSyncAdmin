@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import axios from 'axios';
 
 const ManageQuiz = () => {
@@ -8,7 +8,46 @@ const ManageQuiz = () => {
     choices: ['', '', '', ''], // Initialize with four empty choices
     correctAnswerIndex: -1, // Initialize to -1 (invalid index)
   });
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = "66551ac7974ce1fd67a6e776";
+  const language = "java";
+  const [questions, setQuestions] = useState([]);
 
+  useEffect((id) => {
+    const fetchQuestions = async () => {
+      
+  
+      try {
+        
+      const response = await axios.get('http://localhost:3001/api/quiz');
+        setQuestions(response.data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        console.log(questions);
+      }
+    };
+ 
+    const filteredQuestions = questions.filter((question) => question.id === id);
+    if(filteredQuestions.id === id){
+      console.log(filteredQuestions)
+      console.log(id)
+      // setFormData(filteredQuestions)
+    }
+    // setFormData(filteredQuestions)
+    fetchQuestions();
+  }, []);
+  const filteredQuestions = questions.filter((question) => question.language === language);
+  console.log(filteredQuestions)
+
+  const filterQuestions = filteredQuestions.filter((question) => question.id === id);
+    if(filteredQuestions.id === id){
+      console.log(filteredQuestions)
+      console.log(id)
+      setFormData(filteredQuestions)
+    }
+    setFormData(filteredQuestions)
+  
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
