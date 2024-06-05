@@ -24,7 +24,7 @@ const MainApp = () => {
               <Routes>
                 <Route path="/manage-quiz" element={<ManageQuiz />} />
                 <Route path="/channel-management" element={<ReportedUsers />} />
-                <Route path="/user-management" element={<ReportedUsersPage />} />
+                <Route path="/Reported-Users" element={<ReportedUsers />} />
                 <Route path="/programming-languages" element={<ProgrammingLanguages />} />
                 <Route path="/programming-languages/:language" element={<QuizQuestions />} />
                 <Route path="/programming-languages/:language/new" element={<ManageQuiz />} />

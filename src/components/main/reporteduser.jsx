@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; // Import for routing
+import axios from 'axios';
 
 const ReportedUsers = () => {
   const [users, setUsers] = useState([]);
@@ -8,12 +9,13 @@ const ReportedUsers = () => {
   useEffect(() => {
     const fetchReportedUsers = async () => {
       try {
-        const response = await fetch('/api/reported-users');
-        if (!response.ok) {
-          throw new Error('Failed to fetch reported users');
-        }
-        const data = await response.json();
-        setUsers(data);
+        const response = await axios.get('http://localhost:3001/api/reportedUser');
+        console.log("dddddddddddddddddddddddddddddddddddddddddddddddd")
+        // console.log(response.data[0])
+        setUsers(response.data);
+        console.log(users)
+        
+        
       } catch (error) {
         setError(error.message); // Set error state
         console.error('Error fetching reported users:', error);
@@ -49,11 +51,11 @@ const ReportedUsers = () => {
   );
 };
 
-const ReportedUser = ({ username, reportedBy, description, id }) => {
+const ReportedUser = ({ username, reortedby, description, id }) => {
   return (
     <tr className="border-b border-gray-200 hover:bg-gray-100">
       <td className="px-4 py-2">{username}</td>
-      <td className="px-4 py-2">{reportedBy}</td>
+      <td className="px-4 py-2">{reortedby}</td>
       <td className="px-4 py-2 truncate">{description}</td>
       <td className="px-4 py-2">
         <Link to={`/reported-users/${id}`} className="text-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 px-2 py-1 rounded">
