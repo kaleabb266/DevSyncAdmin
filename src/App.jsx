@@ -1,127 +1,43 @@
-import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import axios from 'axios';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Header from './components/main/Header';
+import Sidebar from './components/main/Sidebar';
+import ManageQuiz from './components/main/ManageQuiz';
+import ChannelManagement from './components/main/channel';
+import ReportedUsersPage from './components/main/Reportusers';
+import ReportedUsers from './components/main/reporteduser';
+import ProgrammingLanguages from './components/main/programminglanguages';
+import QuizQuestions from './components/main/quizquestion';
+// Import other components if you have them
+// import ManageQuiz from './components/main/ManageQuiz';
+// import UserManagement from './UserManagement';
 
-import "./App.css";
-import Chatbar from "./components/main/chatbar";
-import Chat from "./components/main/chat";
-import Sidebar from "./components/main/sidebar";
-import Demo from "./components/main/demo";
-import KnowledgeBase from "./components/main/KnowledgeBase";
-import GroupChat from "./components/main/GroupChat";
-import GroupChatBar from "./components/main/GroupChatBar";
-import { RecentMessageContext } from "./contexts/RecentMessageContext";
-import Profile from "./components/main/Profile";
-import ChatAse from "./components/main/ChatAse";
-import ChatE from "./components/main/ChatE";
-import { ChatEngine, ChatEngineWrapper, Socket, ChatFeed, ChatSettings, ChatList } from "react-chat-engine";
-import { PrettyChatWindow } from "react-chat-engine-pretty";
-import { useMultiChatLogic, MultiChatSocket, MultiChatWindow, getOrCreateChat } from "react-chat-engine-advanced";
-import Sign_Up from "./components/main/Sign_Up";
-import Login from "./components/main/Login";
-import Navbar from "./components/navs/Navbar";
-import ChatPretty from "./components/main/ChatPretty";
-import FullChatEngine from "./components/main/FullChatEngine";
-import DirectChatList from "./components/main/DirectChatList";
-import MemberList from "./components/main/MemberList";
-
-function App() {
-  const [recentMessage, setRecentMessage] = useState("recent message");
-  const [messageTime, setMessageTime] = useState(null);
-  const [user, setUser] = useState(undefined);
-  const [chats, setChats] = useState([]);
-  const [selectedChat, setSelectedChat] = useState(null);
-
-  const handleDirectChatCreated = (chat) => {
-    setSelectedChat(chat.id);
-  };
-
-  const projectId = "e1f65c2a-68bd-457e-9a47-6199cc38c52f";
-
-  useEffect(() => {
-    if (user) {
-      getOrCreateChat(
-        { projectId, username: user.username, secret: user.password },
-        {},
-        (chats) => {
-          const directChats = chats.filter(chat => chat.is_direct_chat);
-          setChats(directChats);
-        },
-        (error) => {
-          console.error('Error fetching chats:', error);
-        }
-      );
-    }
-  }, [projectId, user]);
-
-  const chatProps = useMultiChatLogic(projectId, user?.username, user?.password);
-
+const MainApp = () => {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Login setUser={setUser} />} />
-        <Route path="/side" element={<Sidebar style={{ minWidth: '200px' }} />} />
-        <Route path="/chats" element={
-          user ? (
-            <MultiChatWindow
-              {...chatProps}
-              style={{ height: '100vh', flexGrow: 1 }}
-              renderChatSettings={(chatAppState) => (
-                <div>
-                  <MemberList
-                    projectID={projectId}
-                    chatID={chatAppState.activeChat}
-                    userName={user.username}
-                    userSecret={user.password}
-                    onDirectChatCreated={handleDirectChatCreated}
-                    chatLogic={chatProps}
-                  />
-                </div>
-              )}
-            />
-          ) : (
-            <div>Please log in to access the chats.</div>
-          )
-        } />
-        <Route path="/groups" element={
-          user ? (
-            <MultiChatWindow
-              chats={chatProps.chats}
-              messages={chatProps.messages}
-              activeChatId={chatProps.activeChatId}
-              username={chatProps.username}
-              peopleToInvite={chatProps.peopleToInvite}
-              hasMoreChats={chatProps.hasMoreChats}
-              hasMoreMessages={chatProps.hasMoreMessages}
-              onChatFormSubmit={chatProps.onChatFormSubmit}
-              onChatCardClick={chatProps.onChatCardClick}
-              onChatLoaderShow={chatProps.onChatLoaderShow}
-              onMessageLoaderShow={chatProps.onMessageLoaderShow}
-              onMessageLoaderHide={chatProps.onMessageLoaderHide}
-              onBottomMessageShow={chatProps.onBottomMessageShow}
-              onBottomMessageHide={chatProps.onBottomMessageHide}
-              onMessageFormSubmit={chatProps.onMessageFormSubmit}
-              onInvitePersonClick={chatProps.onInvitePersonClick}
-              onRemovePersonClick={chatProps.onRemovePersonClick}
-              onDeleteChatClick={chatProps.onDeleteChatClick}
-              style={{ height: '100vh', flexGrow: 1 }}
-              renderChatList={(chatAppState) => (
-                <DirectChatList
-                  projectID={projectId}
-                  userName={user.username}
-                  userSecret={user.password}
-                  {...chatAppState}
-                />
-              )}
-            />
-          ) : (
-            <div>Please log in to access the groups.</div>
-          )
-        } />
-        <Route path="/Knowledge-base" element={<KnowledgeBase />} />
-      </Routes>
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <div className="flex flex-1">
+          <Sidebar />
+          <main className="flex-1 flex p-4 lg:ml-64">
+            <div className="w-full p-4">
+              <Routes>
+                <Route path="/manage-quiz" element={<ManageQuiz />} />
+                <Route path="/channel-management" element={<ReportedUsers />} />
+                <Route path="/user-management" element={<ReportedUsersPage />} />
+                <Route path="/programming-languages" element={<ProgrammingLanguages />} />
+                <Route path="/programming-languages/:language" element={<QuizQuestions />} />
+                <Route path="/programming-languages/:language/new" element={<ManageQuiz />} />
+                {/* Add other routes here */}
+                {/* <Route path="/manage-questions" element={<ManageQuestions />} />
+                <Route path="/user-management" element={<UserManagement />} /> */}
+              </Routes>
+            </div>
+          </main>
+        </div>
+      </div>
     </Router>
   );
-}
+};
 
-export default App;
+export default MainApp;

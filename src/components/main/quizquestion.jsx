@@ -31,6 +31,7 @@ const QuizQuestions = ({ languageId }) => {
 }, []);
 
 const filteredQuestions = questions.filter((question) => question.language === selectedlanguage.language);
+console.log(filteredQuestions)
 
 
 
@@ -79,12 +80,25 @@ const filteredQuestions = questions.filter((question) => question.language === s
       navigate('./new'); 
     };
 
+    const handleAddQuestion = () => {
+      window.location.href = "http://localhost:5173/manage-quiz/"; 
+    }
+
+    const handleUpdateQuestion = (id) => {
+      console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")
+      console.log(id)
+      const url = new URL("http://localhost:5173/manage-quiz/");
+      url.searchParams.append("id", "66551ac7974ce1fd67a6e776");
+      window.location.href = url.toString();
+    };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-4">Quiz Questions</h2> 
       <ul className="list-disc">  
         {filteredQuestions.map((question, index) => (
           <li key={question.id} className="border border-gray-300 rounded p-4 mb-4"> 
+           { console.log("theekkkkkkkkkk")}
           {console.log(question._id)}
          { console.log("theekkkkkkkkkk")}
             <h3 className="text-xl font-medium mb-2">{index + 1 }. {question.question}</h3> 
@@ -95,16 +109,16 @@ const filteredQuestions = questions.filter((question) => question.language === s
               <span className="text-gray-700">D. {question.choices[3]}</span>
             </div>
             <div className="flex justify-end mt-4"> 
-              <Link to={`/manage-quiz/${question._id}`} state={{ question }}>
-                <button className="bg-green-500 text-white hover:bg-green-700 px-4 py-2 rounded mr-2">Update</button> 
-              </Link> 
+              
+              <button onClick={() => handleUpdateQuestion(question.id)} className="bg-green-500 text-white hover:bg-green-700 px-4 py-2 rounded mr-2">Update</button> 
+               
               <button onClick={() => handleDeleteQuestion(question.id)} className="bg-red-500 text-white hover:bg-red-700 px-4 py-2 rounded">Delete</button>
 
             </div>
           </li>
         ))}
       </ul>
-      <button onClick={handleDelete} className="bg-blue-500 text-white hover:bg-blue-700 px-4 py-2 rounded">Add Question</button>
+      <button onClick={handleAddQuestion} className="bg-blue-500 text-white hover:bg-blue-700 px-4 py-2 rounded">Add Question</button>
     </div>
   );
   
