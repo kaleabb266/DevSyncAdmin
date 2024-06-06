@@ -51,14 +51,14 @@ const ReportedUsers = () => {
   );
 };
 
-const ReportedUser = ({ username, reortedby, description, id }) => {
+const ReportedUser = ({ username, reortedby, description, _id }) => {
   return (
     <tr className="border-b border-gray-200 hover:bg-gray-100">
       <td className="px-4 py-2">{username}</td>
       <td className="px-4 py-2">{reortedby}</td>
       <td className="px-4 py-2 truncate">{description}</td>
       <td className="px-4 py-2">
-        <Link to={`/reported-users/${id}`} className="text-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 px-2 py-1 rounded">
+        <Link to={`/reported-users/${_id}`} className="text-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 px-2 py-1 rounded">
           View Details
         </Link>
       </td>
