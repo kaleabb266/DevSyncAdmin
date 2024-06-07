@@ -1,24 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const programmingLanguages = [
-  'JavaScript',
-  'Python',
-  'Java',
-  'C++',
-  'Ruby',
-  'Go',
-  'Swift',
-  'TypeScript',
-  'PHP',
-  'C#',
-];
 
 const ChannelManagement = () => {
-    const [channels, setChannels] = useState([]); // Ensure channels is an array
-    const [newChannelName, setNewChannelName] = useState('');
-    const [selectedLanguage, setSelectedLanguage] = useState(programmingLanguages[0]);
+    const [channels, setChannels] = useState([]); 
     const [users, setUsers] = useState([]);
+    const [newChannelName, setNewChannelName] = useState()
 
     useEffect(() => {
         // Fetch existing channels and users
@@ -60,8 +47,10 @@ const ChannelManagement = () => {
         if (newChannelName.trim() === '') return;
 
         try {
-            const response = await axios.post('/api/channels', { name: newChannelName, language: selectedLanguage });
-            setChannels([...channels, response.data]);
+            const response = await axios.post('http://localhost:3001/api/group', { title: newChannelName ,is_direct_chat: false });
+            {console.log("newChannelName")}
+            {console.log(newChannelName)}
+            // setChannels([...channels, response.data]);
             setNewChannelName('');
         } catch (error) {
             console.error('Error creating channel:', error);
@@ -89,6 +78,7 @@ const ChannelManagement = () => {
                     className="border p-2 rounded w-full"
                 />
             </div>
+            {console.log(newChannelName)}
            
             <button 
                 onClick={handleCreateChannel} 
