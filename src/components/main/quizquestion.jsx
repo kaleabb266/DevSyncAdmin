@@ -30,6 +30,7 @@ const QuizQuestions = ({ languageId }) => {
   fetchQuestions();
 }, []);
 
+
 const filteredQuestions = questions.filter((question) => question.language === selectedlanguage.language);
 console.log(filteredQuestions)
 
@@ -40,6 +41,7 @@ console.log(filteredQuestions)
   };
 
   const handleDeleteQuestion = async (questionId) => {
+    const data = {questionIdd:questionId}
     try {
       const response = await axios.delete(`http://localhost:3001/api/quiz/${questionId}`); // Replace with your actual API endpoint
   
@@ -110,9 +112,8 @@ console.log(filteredQuestions)
             </div>
             <div className="flex justify-end mt-4"> 
               
-              <button onClick={() => handleUpdateQuestion(question.id)} className="bg-green-500 text-white hover:bg-green-700 px-4 py-2 rounded mr-2">Update</button> 
                
-              <button onClick={() => handleDeleteQuestion(question.id)} className="bg-red-500 text-white hover:bg-red-700 px-4 py-2 rounded">Delete</button>
+              <button onClick={() => handleDeleteQuestion(question.id)} className="bg-red-500 text-white hover:bg-red-700 px-4 py-2 rounded active:bg-black">Delete</button>
 
             </div>
           </li>

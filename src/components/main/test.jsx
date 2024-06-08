@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react"
 
 
@@ -44,9 +43,7 @@ function App() {
 
   const [recentMessage, setRecentMessage] = useState("recent message")
   const [messageTime, setMessageTime] = useState(null)
-  const [user, setUser] = useState({username:"DagiB",
-    password:"Dagi1234"
-  });
+  const [user, setUser] = useState();
 
   const [chats, setChats] = useState([]);
 
@@ -58,11 +55,11 @@ function App() {
 
   const chatProps = useMultiChatLogic(projectId, user?.username, user?.password);
   const handleLoginSuccess = (userData) => {
-
+    // setUser(userData);
     console.log("userData")
     useState(userData)
     console.log(userData)
-    setCredentials({ username: userData.username, password: userData.password }); 
+    setCredentials({ username: userData.username, password: userData.password }); // Update credentials after login
   };
 
   useEffect(() => {
@@ -150,7 +147,10 @@ function App() {
 
 
 
-  
+  // {/* <AudioChat /> */}
+
+  // <AudioCall />
+  // {/* <Login /> */}
 
 
 
@@ -160,5 +160,3 @@ function App() {
 
 
 export default App
-
-
