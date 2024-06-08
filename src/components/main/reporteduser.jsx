@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Import for routing
+import { Link } from 'react-router-dom'; 
 import axios from 'axios';
 
 const ReportedUsers = () => {
   const [users, setUsers] = useState([]);
-  const [error, setError] = useState(null); // State for error handling
+  const [error, setError] = useState(null);
+
+
 
   useEffect(() => {
     const fetchReportedUsers = async () => {
@@ -26,9 +28,8 @@ const ReportedUsers = () => {
   }, []);
   
  
-  const handleRemove = (id) => {
-    console.log("jdklsjafldsjf") 
-  }
+ 
+  
 
 
   return (
@@ -60,6 +61,26 @@ const ReportedUsers = () => {
 };
 
 const ReportedUser = ({ reporeduser, reportedby, description,group,date, _id }) => {
+
+  const [forceRender, setForceRender] = useState(false);
+
+  const handleRemove = async (Id) => {
+    console.log(Id); 
+  
+    try {
+      const response = await axios.delete(`http://localhost:3001/api/report/${Id}`);
+      if (response.status === 200) {
+        alert("Report removed successfully!");
+        setForceRender(!forceRender)
+      } else {
+        console.error('Unexpected response status:', response.status, response.data);
+        alert("An error occurred during removing. Please try again."); 
+      }
+    } catch (error) {
+      console.error('Error removing report:', error);
+      alert("An error occurred. Please try again.");
+    }
+  };
   return (
     <tr className="border-b border-gray-200 hover:bg-gray-100">
       <td className="px-4 py-2">{reporeduser}</td>
@@ -69,7 +90,7 @@ const ReportedUser = ({ reporeduser, reportedby, description,group,date, _id }) 
       <td className="px-4 py-2 truncate">{date}</td>
       <td className="px-4 py-2">
       <button  class="px-4 py-2 bg-red-500 text-white font-bold rounded shadow-sm hover:bg-red-700 mr-5 " >Ban</button>
-      {/* <button class="px-4 py-2 bg-green-500 text-white font-bold rounded shadow-sm hover:bg-red-700 ml-5" onClick={() => handleRemove(question.id)} >Remove</button> */}
+      <button class="px-4 py-2 bg-green-500 text-white font-bold rounded shadow-sm hover:bg-red-700 ml-5" onClick={() => handleRemove(_id)} >Remove</button>
 
         
       </td>

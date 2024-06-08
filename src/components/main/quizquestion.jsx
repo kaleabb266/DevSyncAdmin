@@ -9,6 +9,7 @@ const QuizQuestions = ({ languageId }) => {
   const selectedlanguage = useParams();
   console.log(selectedlanguage.language)
   const [questions, setQuestions] = useState([]);
+  const [forceRender, setForceRender] = useState(false);
 
 
 
@@ -36,25 +37,26 @@ console.log(filteredQuestions)
 
 
 
-  const addQuestion = () => {
-    // Logic to add a new question
-  };
+  
 
-  const handleDeleteQuestion = async (questionId) => {
-    const data = {questionIdd:questionId}
-    try {
-      const response = await axios.delete(`http://localhost:3001/api/quiz/${questionId}`); // Replace with your actual API endpoint
-  
-      if (response.status === 200) {
-        onDeleteSuccess(); // Callback function to handle successful deletion on UI
-      } else {
-        console.error('Error deleting question:', response.data);
-      }
-    } catch (error) {
-      console.error('Error deleting question:', error);
+const handleDeleteQuestion = async (questionId) => {
+  console.log(questionId); 
+
+  try {
+    const response = await axios.delete(`http://localhost:3001/api/quiz/${questionId}`);
+    if (response.status === 200) {
+      alert("Question deleted successfully!");
+      setForceRender(!forceRender)
+    } else {
+      console.error('Unexpected response status:', response.status, response.data);
+      alert("An error occurred during deletion. Please try again."); 
     }
-  };
-  
+  } catch (error) {
+    console.error('Error deleting question:', error);
+    alert("An error occurred. Please try again.");
+  }
+};
+
 
 
   const updateQuestion = (questionId) => {
@@ -102,6 +104,7 @@ console.log(filteredQuestions)
           <li key={question.id} className="border border-gray-300 rounded p-4 mb-4"> 
            { console.log("theekkkkkkkkkk")}
           {console.log(question._id)}
+        
          { console.log("theekkkkkkkkkk")}
             <h3 className="text-xl font-medium mb-2">{index + 1 }. {question.question}</h3> 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> 
@@ -113,7 +116,7 @@ console.log(filteredQuestions)
             <div className="flex justify-end mt-4"> 
               
                
-              <button onClick={() => handleDeleteQuestion(question.id)} className="bg-red-500 text-white hover:bg-red-700 px-4 py-2 rounded active:bg-black">Delete</button>
+              <button onClick={() => handleDeleteQuestion(question._id)} className="bg-red-500 text-white hover:bg-red-700 px-4 py-2 rounded active:bg-black">Delete</button>
 
             </div>
           </li>

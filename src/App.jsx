@@ -24,7 +24,7 @@ console.log("user is ",user)
   }, [user]);
 
   
-  if (user.username) {
+  if (!user.username) {
 
     return <Router>
       <Routes>
@@ -47,7 +47,7 @@ console.log("user is ",user)
               <div className="w-full p-4">
                 <Routes>
                   <Route path="/manage-quiz" element={<ManageQuiz />} />
-                  <Route path="/manage-group" element={<ChannelManagement />} />
+                  <Route path="/manage-group" element={<ChannelManagement  />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/Reported-Users" element={<ReportedUsers />} />
                   <Route path="/Reported-Users/:id" element={<ReportedUserDetails />} />

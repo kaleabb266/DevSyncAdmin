@@ -37,21 +37,27 @@ const Login = (props) => {
         username: Yup.string().required('Username is required'),
         password: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
     });
-
-    const onLogin = (e) => {
+    
+    const handleSubmit = (e) => {
+        console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee1")
         e.preventDefault();
+        console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee2")
         const filteredData = formData;
+        console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee3")
 
         console.log(filteredData)
-        axios
-            .post("http://localhost:3001/api/login", filteredData)
-            .then((r =>console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")))
-            .then((r) => props.onAuth(filteredData)) // NOTE: over-ride secre
-            .then(navigate('/manage-group'))
+        props.onAuth(filteredData)
+        navigate('/manage-group')
+        console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee4")
+        axios.get("http://localhost:3001/api/admin", filteredData)
+            .then((r =>console.log(r)))
+            .then(r=>setUser(r))
+            .then(r =>r && navigate("/"))
             .catch((e) => console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"));
     };
 
-    const handleSubmit = async (event) => {
+
+    const  onLogin = async (event) => {
         event.preventDefault();
 
         try {
@@ -60,15 +66,24 @@ const Login = (props) => {
             const filteredData = formData;
             console.log(filteredData)
 
-            const response = await axios.post('http://localhost:3001/api/login', filteredData);
+            const response = await axios.get('http://localhost:3001/api/admin', filteredData);
             console.log(filteredData)
             console.log('user found successfully use id:', response.data);
             if (response.status === 200) {
-                setUser(formData);
-                console.log(formData)
-                navigate('/chats');
-                console.log("ullllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllser")
-                console.log("loading ...")
+                if (response.data[0].name === filteredData.username && response.data[0].password === filteredData.password){
+                    console.log("respons",response.data)
+                    console.log("user",filteredData)
+                    props.onAuth(filteredData);
+                    console.log(formData)
+                    navigate('/manage-group');
+                    console.log("ullllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllser")
+                    console.log("loading ...")
+
+                }
+                else{
+                    alert("Incorrect username or password")
+                }
+                
             }
             
         } catch (error) {
