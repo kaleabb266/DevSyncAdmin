@@ -59,31 +59,17 @@ const Login = (props) => {
             // console.log("amshdgvjhb")
             await validationSchema.validate(formData, { abortEarly: false }); // Validate all fields at once
             const filteredData = formData;
-            console.log(filteredData)
-
-            const response = await axios.post('http://localhost:3001/api/login', filteredData);
-            console.log(filteredData)
-            console.log('user found successfully use id:', response.data);
+            // console.log(filteredData)
+            
+            const response = await axios.get('http://localhost:3001/api/admin', filteredData);
             if (response.status === 200) {
-                setUser(formData);
                 sessionStorage.setItem('userAuthToken', JSON.stringify(filteredData));
-                window.location.href("/manage-group")
-                console.log(formData)
-                ;
+                window.location.href = "/";
+            
+                console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",formData)
                 
             }
-            // Use GET request with query parameters
-            // console.log(response.data.user.length);
-            // const i = 0;
-            // for (i ; i > response.data.user.length;i++ ) {
-            //     if(response.data.user[i].username && response.data.username) {
-            //         setUser(response.data.user[i]);
-            //         console.log("user found")
-            //         navigate('/chats');
-            //     } else {
-            //         console.error('Invalid login credentials');
-            //     }
-            // }
+        
         } catch (error) {
             if (error.name === 'ValidationError') {
                 console.error('Validation Errors:', error.errors);

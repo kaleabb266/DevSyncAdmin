@@ -20,13 +20,16 @@ const MainApp = () => {
 
   useEffect(() => {
     setUser(JSON.parse(sessionStorage.getItem('userAuthToken')))
+    console.log("ggggggggggggggggggggggggggggggggggggggggggggggggggggggg")
+  console.log("user",user)
+  console.log(JSON.parse(sessionStorage.getItem('userAuthToken')))
+  console.log("ggggggggggggggggggggggggggggggggggggggggggggggggggggggg")
+
 
     
-  }, []);
+  }, [JSON.parse(sessionStorage.getItem('userAuthToken'))]);
   // setUser(JSON.parse(sessionStorage.getItem('cart')))
-  console.log("ggggggggggggggggggggggggggggggggggggggggggggggggggggggg")
-  console.log(user)
-
+  
   
   if (!user) {
 
