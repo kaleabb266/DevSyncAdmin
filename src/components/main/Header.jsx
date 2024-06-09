@@ -16,9 +16,7 @@ const Header = () => {
               </a>
             </div>
           </div>
-          <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
-            <SearchBar />
-          </div>
+          
           <div className="flex items-center md:absolute md:inset-y-0 md:right-0 lg:hidden">
             <MobileMenuButton />
           </div>

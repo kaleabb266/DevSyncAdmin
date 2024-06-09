@@ -10,6 +10,8 @@ const Login = (props) => {
         password: '',
     });
 
+    console.log("mmmmmmmmmmmmmmmmmmmm")
+
     const [validationErrors, setValidationErrors] = useState({});
     const navigate = useNavigate();
 
@@ -37,27 +39,20 @@ const Login = (props) => {
         username: Yup.string().required('Username is required'),
         password: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
     });
-    
-    const handleSubmit = (e) => {
-        console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee1")
+
+    const  handleSubmit= (e) => {
         e.preventDefault();
-        console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee2")
         const filteredData = formData;
-        console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee3")
 
         console.log(filteredData)
-        props.onAuth(filteredData)
-        navigate('/manage-group')
-        console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee4")
-        axios.get("http://localhost:3001/api/admin", filteredData)
-            .then((r =>console.log(r)))
-            .then(r=>setUser(r))
-            .then(r =>r && navigate("/"))
-            .catch((e) => console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"));
+        axios
+            .post("http://localhost:3001/api/login", filteredData)
+            .then((r) => props.onAuth(filteredData)) // NOTE: over-ride secret
+            .then(navigate('/chats'))
+            .catch((e) => console.log(JSON.stringify(e.response.data)));
     };
 
-
-    const  onLogin = async (event) => {
+    const onLogin = async (event) => {
         event.preventDefault();
 
         try {
@@ -66,26 +61,29 @@ const Login = (props) => {
             const filteredData = formData;
             console.log(filteredData)
 
-            const response = await axios.get('http://localhost:3001/api/admin', filteredData);
+            const response = await axios.post('http://localhost:3001/api/login', filteredData);
             console.log(filteredData)
             console.log('user found successfully use id:', response.data);
             if (response.status === 200) {
-                if (response.data[0].name === filteredData.username && response.data[0].password === filteredData.password){
-                    console.log("respons",response.data)
-                    console.log("user",filteredData)
-                    props.onAuth(filteredData);
-                    console.log(formData)
-                    navigate('/manage-group');
-                    console.log("ullllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllser")
-                    console.log("loading ...")
-
-                }
-                else{
-                    alert("Incorrect username or password")
-                }
+                setUser(formData);
+                sessionStorage.setItem('userAuthToken', JSON.stringify(filteredData));
+                window.location.href("/manage-group")
+                console.log(formData)
+                ;
                 
             }
-            
+            // Use GET request with query parameters
+            // console.log(response.data.user.length);
+            // const i = 0;
+            // for (i ; i > response.data.user.length;i++ ) {
+            //     if(response.data.user[i].username && response.data.username) {
+            //         setUser(response.data.user[i]);
+            //         console.log("user found")
+            //         navigate('/chats');
+            //     } else {
+            //         console.error('Invalid login credentials');
+            //     }
+            // }
         } catch (error) {
             if (error.name === 'ValidationError') {
                 console.error('Validation Errors:', error.errors);
@@ -95,7 +93,7 @@ const Login = (props) => {
                 }, {}));
             } else {
                 console.error('Error logging in:', error);
-                
+                // Handle other errors (e.g., display error message)
             }
         }
     };

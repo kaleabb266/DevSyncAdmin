@@ -82,7 +82,7 @@ const ManageQuiz = () => {
               <div key={index} className="mb-2">
                 <input
                   type="text"
-                  name={`choice-${index + 1}`} // Individual names for each choice
+                  name={`choice-${index + 1}`}
                   value={choice}
                   onChange={(e) => handleChoiceChange(index, e.target.value)}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

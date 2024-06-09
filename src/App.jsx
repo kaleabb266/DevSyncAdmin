@@ -19,12 +19,16 @@ const MainApp = () => {
   const [user, setUser] = useState({}); 
 
   useEffect(() => {
-console.log("user is ",user)
+    setUser(JSON.parse(sessionStorage.getItem('userAuthToken')))
+
     
-  }, [user]);
+  }, []);
+  // setUser(JSON.parse(sessionStorage.getItem('cart')))
+  console.log("ggggggggggggggggggggggggggggggggggggggggggggggggggggggg")
+  console.log(user)
 
   
-  if (!user.username) {
+  if (!user) {
 
     return <Router>
       <Routes>
@@ -39,7 +43,7 @@ console.log("user is ",user)
     <Router>
       
         <div className="flex flex-col min-h-screen">
-          
+        
           <div className="flex flex-1">
             <Sidebar />
             {/* <Route path="/manage-quiz" element={<ManageQuiz />} /> */}

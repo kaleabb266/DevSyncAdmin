@@ -9,7 +9,6 @@ const QuizQuestions = ({ languageId }) => {
   const selectedlanguage = useParams();
   console.log(selectedlanguage.language)
   const [questions, setQuestions] = useState([]);
-  const [forceRender, setForceRender] = useState(false);
 
 
 
@@ -45,8 +44,7 @@ const handleDeleteQuestion = async (questionId) => {
   try {
     const response = await axios.delete(`http://localhost:3001/api/quiz/${questionId}`);
     if (response.status === 200) {
-      alert("Question deleted successfully!");
-      setForceRender(!forceRender)
+      window.location.reload()
     } else {
       console.error('Unexpected response status:', response.status, response.data);
       alert("An error occurred during deletion. Please try again."); 
