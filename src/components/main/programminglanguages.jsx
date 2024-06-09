@@ -32,10 +32,15 @@ useEffect(() => {
 
     window.location.href = `${window.location.origin}${window.location.pathname}/${language}`;
   };
-
+  const handleAddQuestion = () => {
+    window.location.href = "http://localhost:5173/manage-quiz/"; 
+  }
 
   return (
     <div className="flex flex-col   gap-4">
+      <div class=" text-center font-bold py-4 rounded-b-lg">
+        <h2>Tech Stacks</h2>
+     </div>
       {languages.map((language, index) => (
         <button
           key={index}
@@ -45,6 +50,7 @@ useEffect(() => {
           {language}
         </button>
       ))}
+      <button onClick={handleAddQuestion} className="bg-blue-500 text-white hover:bg-blue-700 px-4 py-2 rounded">Add Question</button>
     </div>
   );
 };

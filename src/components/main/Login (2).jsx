@@ -56,17 +56,15 @@ const Login = (props) => {
         event.preventDefault();
 
         try {
-            // console.log("amshdgvjhb")
+            
             await validationSchema.validate(formData, { abortEarly: false }); // Validate all fields at once
             const filteredData = formData;
-            // console.log(filteredData)
+            
             
             const response = await axios.get('http://localhost:3001/api/admin', filteredData);
             if (response.status === 200) {
                 sessionStorage.setItem('userAuthToken', JSON.stringify(filteredData));
                 window.location.href = "/";
-            
-                console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",formData)
                 
             }
         
