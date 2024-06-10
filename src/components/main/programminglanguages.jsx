@@ -50,7 +50,7 @@ useEffect(() => {
           {language}
         </button>
       ))}
-      <button onClick={handleAddQuestion} className="bg-blue-500 text-white hover:bg-blue-700 px-4 py-2 rounded">Add Question</button>
+        <button onClick={handleAddQuestion} className="bg-blue-500 text-white hover:bg-blue-700 px-4 py-2 rounded">Add Question</button>
     </div>
   );
 };

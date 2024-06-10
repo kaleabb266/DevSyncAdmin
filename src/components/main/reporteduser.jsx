@@ -44,8 +44,6 @@ const ReportedUsers = () => {
               <th className="px-4 py-2">Username</th>
               <th className="px-4 py-2">Reported By</th>
               <th className="px-4 py-2">Description</th>
-              <th className="px-4 py-2">Group</th>
-              <th className="px-4 py-2">Date</th>
               <th className="px-4 py-2">Actions</th>
             </tr>
           </thead>
@@ -124,11 +122,9 @@ const ReportedUser = ({ reporeduser, reportedby, description,group,date, _id }) 
   };
   return (
     <tr className="border-b border-gray-200 hover:bg-gray-100">
-      <td className="px-4 py-2">{reporeduser}</td>
-      <td className="px-4 py-2">{reportedby}</td>
-      <td className="px-4 py-2 truncate">{description}</td>
-      <td className="px-4 py-2 truncate">{group}</td>
-      <td className="px-4 py-2 truncate">{date}</td>
+      <td className="px-4 py-2 max-w-sm">{reporeduser}</td>
+      <td className="px-4 py-2 max-w-sm grid-container">{reportedby}</td>
+      <td class="px-4 py-2 wrap max-w-sm"> {description}</td>
       <td className="px-4 py-2">
       <button  class="px-4 py-2 bg-red-500 text-white font-bold rounded shadow-sm hover:bg-red-700 mr-5 " onClick={() => handleBan("kale")}>Ban</button>
       <button class="px-4 py-2 bg-green-500 text-white font-bold rounded shadow-sm hover:bg-red-700 ml-5" onClick={() => handleRemove(_id)} >Remove</button>
